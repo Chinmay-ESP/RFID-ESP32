@@ -1,0 +1,20 @@
+{
+    "C_Cpp.intelliSenseEngine": "default",
+    "idf.espIdfPath": "/home/chinmay/esp/v5.2.3/esp-idf",
+    "idf.openOcdConfigs": [
+        "board/esp32s3-builtin.cfg"
+    ],
+    "idf.port": "/dev/ttyACM0",
+    "idf.toolsPath": "/home/chinmay/.espressif",
+    "files.associations": {
+        "rc522_helpers_internal.h": "c",
+        "rc522_picc_internal.h": "c",
+        "*.tcc": "cpp",
+        "format": "cpp",
+        "mutex": "cpp",
+        "stop_token": "cpp",
+        "thread": "cpp",
+        "variant": "cpp"
+    },
+    "idf.flashType": "UART"
+}
