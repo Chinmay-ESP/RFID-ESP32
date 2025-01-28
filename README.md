@@ -1,32 +1,78 @@
-# _Sample project_
+# ESP32-RFID Reading & Publishing Using Micro-ROS in ESP-IDF
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+This repository demonstrates how to interface an RFID reader with an ESP32-S3 microcontroller and publish the RFID data to ROS2 using Micro-ROS.
 
-This is the simplest buildable example. The example is used by command `idf.py create-project`
-that copies the project to user specified path and set it's name. For more information follow the [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project)
+---
 
+## **RFID Connection with ESP32-S3**
 
+| RFID Pin | ESP32-S3 Pin |
+|----------|--------------|
+| SDA      | GPIO 35      |
+| SCLK     | GPIO 36      |
+| MOSI     | GPIO 38      |
+| MISO     | GPIO 37      |
 
-## How to use example
-We encourage the users to use the example as a template for the new projects.
-A recommended way is to follow the instructions on a [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project).
+---
 
-## Example folder contents
+## **Functionality**
 
-The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+1. The ESP32-S3 reads the UID from the RFID module and logs it to the serial monitor.
+2. The UID data is published to ROS2 using Micro-ROS with an `int32` publisher.
 
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
-files that provide set of directives and instructions describing the project's source files and targets
-(executable, library, or both). 
+---
 
-Below is short explanation of remaining files in the project folder.
+## **Publishing to ROS2 with Micro-ROS**
 
+To enable communication between the ESP32-S3 and ROS2, Micro-ROS is used. The following command runs the Micro-ROS agent in a Docker container:
+
+```bash
+docker run -it --rm --ipc host --network host --privileged microros/micro-ros-agent:humble serial -b 12000000 --dev /dev/ttyACM1
 ```
-├── CMakeLists.txt
-├── main
-│   ├── CMakeLists.txt
-│   └── main.c
-└── README.md                  This is the file you are currently reading
-```
-Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
-They are not used or needed when building with CMake and idf.py.
+
+### **Steps to Publish Data:**
+1. Connect the ESP32-S3 to your computer.
+2. Ensure the Micro-ROS agent is running using the command above.
+3. Monitor the published data in ROS2.
+
+---
+
+## **Requirements**
+
+- **ESP-IDF Framework**: Install and configure the ESP-IDF for ESP32-S3 development.
+- **Micro-ROS**: Ensure the Micro-ROS library is integrated into the ESP-IDF project.
+- **Docker**: Required to run the Micro-ROS agent.
+- **ROS2**: Installed on the host system (Humble Hawksbill).
+
+---
+
+## **Usage**
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   ```
+
+2. Initialize and update submodules (if any):
+   ```bash
+   git submodule update --init --recursive
+   ```
+
+3. Build and flash the ESP32-S3 project:
+   ```bash
+   idf.py build
+   idf.py flash
+   idf.py monitor
+   ```
+
+4. Run the Micro-ROS agent on the host system (see command above).
+
+---
+
+## **Features**
+
+- Real-time RFID data acquisition.
+- Seamless integration with ROS2 through Micro-ROS.
+- Lightweight and efficient implementation.
+
+---
